@@ -1,3 +1,10 @@
+$version = "1.0"
+$author = "Aperture Science"
+$OS = "Ubuntu"
+$OS_Version = "22.04"
+
+
+
 #check for root
 clear
 if [ "$(id -u)" != "0" ]; then
@@ -15,8 +22,8 @@ touch /var/run/aperture.pid
 #check if the operating system is Ubuntu
 if [ -f /etc/lsb-release ]; then
    . /etc/lsb-release
-   if [ "$DISTRIB_ID" != "Ubuntu" ]; then
-      echo "\e[91mThis script is desingt to run on Ubuntu and you are not using it on Ubuntu this may lead to errors\e[0m" 1>&2
+   if [ "$DISTRIB_ID" != "$OS" ]; then
+      echo "\e[91mThis script is desingt to run on $OS and you are not using it on $OS this may lead to errors\e[0m" 1>&2
    fi
 fi
 
@@ -36,11 +43,11 @@ echo "\e[91m......░..░............░..░...░.................░........
 echo "\e[91m.................................................................................░..............................░...............\e[0m"
 echo ""
 echo "\e[91mAperture Science Server setup script\e[0m"
-echo "\e[91mVersion 1.0\e[0m"
+echo "\e[91mVersion $version \e[0m"
 echo "\e[91mCopyright (C) 2022 Aperture Science\e[0m"
 echo ""
 echo "\e[91mThis program is free software: you can redistribute it and/or modify\e[0m"
-echo "\e[91mit under the terms of the GNU General Public License as published by\e[0m"
+echo "\e[91mit is under the terms of the GNU General Public License \e[0m"
 echo ""
 
 
@@ -54,17 +61,35 @@ apt-get install wget -y
 #check if the ubuntu version older tan 22.04 and print a warning message
 if [ -f /etc/lsb-release ]; then
    . /etc/lsb-release
-   if [ "$DISTRIB_RELEASE" != "22.04" ]; then
+   if [ "$DISTRIB_RELEASE" != "$OS_Version" ]; then
       echo "\e[91mYou are not using Ubuntu 22.04 this may lead to errors\e[0m" 1>&2
-      exit
+      #ask the user if he wants to continue if not exit the script
+      read -p "Do you want to continue? (y/n) " -n 1 -r
+      echo ""
+      if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+         exit 1
+      fi
    fi
 fi
+
 
 #install nala
 echo  "\e[92mInstalling Nala\e[0m"
 echo "deb [arch=amd64,arm64,armhf] http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
 wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > /dev/null
-apt update && sudo apt install nala -y
+apt update 
+#check the os version and install the correct nala version
+if [ -f /etc/lsb-release ]; then
+   . /etc/lsb-release
+   if [ "$DISTRIB_RELEASE" = "$OS_Version" ]; then
+      apt-get install nala -y
+   else
+      apt-get install nala-legacy -y
+   fi
+fi
+
+
+
 #check if nala is installed and print success message in green or error message in red
 if [ -f /usr/bin/nala ]; then
    echo  "\e[92mNala installed successfully\e[0m"
