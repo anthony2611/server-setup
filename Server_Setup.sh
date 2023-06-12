@@ -1,4 +1,4 @@
-$version = "1.0"
+$version = "1.1"
 $author = "Aperture Science"
 $OS = "Ubuntu"
 $OS_Version = "22.04"
@@ -192,6 +192,13 @@ echo $USERNAME
 echo   "\e[92mChanging to home directory of user\e[0m"
 #add the following to the .bashrc file
 sudo -u $USERNAME echo "PS1='\[\e[0;91m\]Aperture Science Server Shell \n\[\e[0;91m\]├\[\e[0;91m\]SYSTEM:\[\e[0;38;5;202m\]\h \[\e[0;91m\]IP:\[\e[0;38;5;202m\]$(hostname -I) \[\e[0;91m\]USER:\[\e[0;38;5;202m\]\u\n\[\e[0;91m\]├\[\e[0;91m\]DIR:\[\e[0;38;5;199m\]\w\n\[\e[0;91m\]└\[\e[0;97m\]> \[\e[0m\]'" >> .bashrc
+
+#copy the 99-banner file to /etc/update-motd.d/99-banner
+echo "\e[92mInstalling banner\e[0m"
+cp 99-banner /etc/update-motd.d/99-banner
+#make the file executable
+chmod +x /etc/update-motd.d/99-banner
+
 
 #sudo -u $USERNAME brew install gcc
 #install btop over brew
