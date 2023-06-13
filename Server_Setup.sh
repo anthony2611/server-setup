@@ -27,7 +27,19 @@ if [ -f /etc/lsb-release ]; then
    fi
 fi
 
-#display the banner
+#check if the ubuntu version older tan 22.04 and print a warning message
+if [ -f /etc/lsb-release ]; then
+   . /etc/lsb-release
+   if [ "$DISTRIB_RELEASE" != "$OS_Version" ]; then
+      echo "\e[91mYou are not using $OS $OS_Version this may lead to errors\e[0m" 1>&2
+      #ask the user if he wants to continue if not exit the script
+      read -p "Do you want to continue? (y/n) " -r
+      echo ""
+      if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+         exit 1
+      fi
+   fi
+fi
 
 echo ""
 echo ""
@@ -51,6 +63,8 @@ echo "\e[91mit is under the terms of the GNU General Public License \e[0m"
 echo ""
 
 
+
+
 #apt update
 apt-get update
 #apt upgrade
@@ -58,20 +72,8 @@ apt-get upgrade -y
 #install wget
 apt-get install wget -y
 
-#check if the ubuntu version older tan 22.04 and print a warning message
-if [ -f /etc/lsb-release ]; then
-   . /etc/lsb-release
-   if [ "$DISTRIB_RELEASE" != "$OS_Version" ]; then
-      echo "\e[91mYou are not using Ubuntu 22.04 this may lead to errors\e[0m" 1>&2
-      #ask the user if he wants to continue if not exit the script
-      read -p "Do you want to continue? (y/n) " -n 1 -r
-      echo ""
-      if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-         exit 1
-      fi
-   fi
-fi
 
+#!##########################################[NALA INSTALL]###################################################################
 
 #install nala
 echo  "\e[92mInstalling Nala\e[0m"
@@ -107,6 +109,9 @@ fi
 echo "\e[92mUpdating Nala\e[0m"
 nala update
 nala upgrade -y
+
+#!##########################################[BASE PACK INSTALL]###################################################################
+
 
 #install neofetch over nala
 echo "\e[92mInstalling neofetch\e[0m"
@@ -184,6 +189,15 @@ nala install htop -y
 #check if htop is installed and print success message or error message
 
 
+#!##########################################[BANNER and BASH SETUP]###################################################################
+
+#copy the 99-banner file to /etc/update-motd.d/99-banner
+echo "\e[92mInstalling banner\e[0m"
+cp 99-banner /etc/update-motd.d/99-banner
+#make the file executable
+chmod +x /etc/update-motd.d/99-banner
+
+
 #get the username of the user with the id of 1000
 USERNAME=$(cat /etc/passwd | grep 1000 | cut -d: -f1)
 #change to the home directory of the user
@@ -193,18 +207,7 @@ echo   "\e[92mChanging to home directory of user\e[0m"
 #add the following to the .bashrc file
 sudo -u $USERNAME echo "PS1='\[\e[0;91m\]Aperture Science Server Shell \n\[\e[0;91m\]├\[\e[0;91m\]SYSTEM:\[\e[0;38;5;202m\]\h \[\e[0;91m\]IP:\[\e[0;38;5;202m\]$(hostname -I) \[\e[0;91m\]USER:\[\e[0;38;5;202m\]\u\n\[\e[0;91m\]├\[\e[0;91m\]DIR:\[\e[0;38;5;199m\]\w\n\[\e[0;91m\]└\[\e[0;97m\]> \[\e[0m\]'" >> .bashrc
 
-#copy the 99-banner file to /etc/update-motd.d/99-banner
-echo "\e[92mInstalling banner\e[0m"
-cp 99-banner /etc/update-motd.d/99-banner
-#make the file executable
-chmod +x /etc/update-motd.d/99-banner
-
-
-
-
-#sudo -u $USERNAME brew install gcc
-#install btop over brew
-#sudo -u $USERNAME brew install btop
+#!##########################################################[SOME SOFTWARE]###################################################################
 
 #ask the user if they want to install docker and docker-compose over nala
 echo "\e[92mDo you want to install docker and docker-compose?\e[0m"
