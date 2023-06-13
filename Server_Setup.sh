@@ -1,7 +1,7 @@
-$version = "1.1"
-$author = "Aperture Science"
-$OS = "Ubuntu"
-$OS_Version = "22.04"
+version="1.1"
+author="Aperture Science"
+OS="Ubuntu"
+OS_Version="22.04"
 
 
 
@@ -23,7 +23,7 @@ touch /var/run/aperture.pid
 if [ -f /etc/lsb-release ]; then
    . /etc/lsb-release
    if [ "$DISTRIB_ID" != "$OS" ]; then
-      echo "\e[91mThis script is desingt to run on $OS and you are not using it on $OS this may lead to errors\e[0m" 1>&2
+      echo "\e[91mThis script is desingt to run on" $OS "and you are not using it on" $OS "this may lead to errors\e[0m" 1>&2
    fi
 fi
 
@@ -200,6 +200,8 @@ cp 99-banner /etc/update-motd.d/99-banner
 chmod +x /etc/update-motd.d/99-banner
 
 
+
+
 #sudo -u $USERNAME brew install gcc
 #install btop over brew
 #sudo -u $USERNAME brew install btop
@@ -327,4 +329,6 @@ echo  "\e[32mDone\e[0m"
 #remove the pid file
 rm /var/run/aperture.pid
 
-
+#restart the ssh service
+echo "\e[92mRestarting ssh service\e[0m"
+systemctl restart sshd
