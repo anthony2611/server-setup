@@ -1,19 +1,26 @@
+#!/bin/bash
+
 version="1.1"
 author="Aperture Science"
 OS="Ubuntu"
 OS_Version="22.04"
 
-
+#colors
+Red='\033[0;31m'   #'0;31' is Red's ANSI color code
+Green='\033[0;32m'   #'0;32' is Green's ANSI color code
+Yellow='\033[1;32m'   #'1;32' is Yellow's ANSI color code
+Blue='\033[0;34m'   #'0;34' is Blue's ANSI color code
+NOCOLOR='\033[0m' #No Color ANSI code
 
 #check for root
 clear
 if [ "$(id -u)" != "0" ]; then
-   echo "\e[91mThis script must be run as root\e[0mva" 1>&2
+   echo -e "${Red}This script must be run as root ${NOCOLOR}" 1>&2
    exit 1
 fi
 #check if the script is already running
 if [ -f /var/run/aperture.pid ]; then
-   echo "\e[91mScript already running\e[0m" 1>&2
+   echo -e "${Red}Script already running ${NOCOLOR}" 1>&2
    exit 1
 fi
 #create pid file
@@ -23,7 +30,7 @@ touch /var/run/aperture.pid
 if [ -f /etc/lsb-release ]; then
    . /etc/lsb-release
    if [ "$DISTRIB_ID" != "$OS" ]; then
-      echo "\e[91mThis script is desingt to run on" $OS "and you are not using it on" $OS "this may lead to errors\e[0m" 1>&2
+      echo -e "${Red}This script is desingt to run on" $OS "and you are not using it on" $OS "this may lead to errors ${NOCOLOR}" 1>&2
    fi
 fi
 
@@ -31,7 +38,7 @@ fi
 if [ -f /etc/lsb-release ]; then
    . /etc/lsb-release
    if [ "$DISTRIB_RELEASE" != "$OS_Version" ]; then
-      echo "\e[91mYou are not using $OS $OS_Version this may lead to errors\e[0m" 1>&2
+      echo -e "${Red}You are not using $OS $OS_Version this may lead to errors ${NOCOLOR}" 1>&2
       #ask the user if he wants to continue if not exit the script
       read -p "Do you want to continue? (y/n) " -r
       echo ""
@@ -43,23 +50,23 @@ fi
 
 echo ""
 echo ""
-echo "\e[91m.▄▄▄.......██▓███..▓█████..██▀███..▄▄▄█████▓.█....██..██▀███..▓█████......██████..▄████▄...██▓▓█████..███▄....█..▄████▄..▓█████.\e[0m"
-echo "\e[91m▒████▄....▓██░..██▒▓█...▀.▓██.▒.██▒▓..██▒.▓▒.██..▓██▒▓██.▒.██▒▓█...▀....▒██....▒.▒██▀.▀█..▓██▒▓█...▀..██.▀█...█.▒██▀.▀█..▓█...▀.\e[0m"
-echo "\e[91m▒██..▀█▄..▓██░.██▓▒▒███...▓██.░▄█.▒▒.▓██░.▒░▓██..▒██░▓██.░▄█.▒▒███......░.▓██▄...▒▓█....▄.▒██▒▒███...▓██..▀█.██▒▒▓█....▄.▒███...\e[0m"
-echo "\e[91m░██▄▄▄▄██.▒██▄█▓▒.▒▒▓█..▄.▒██▀▀█▄..░.▓██▓.░.▓▓█..░██░▒██▀▀█▄..▒▓█..▄......▒...██▒▒▓▓▄.▄██▒░██░▒▓█..▄.▓██▒..▐▌██▒▒▓▓▄.▄██▒▒▓█..▄.\e[0m"
-echo "\e[91m.▓█...▓██▒▒██▒.░..░░▒████▒░██▓.▒██▒..▒██▒.░.▒▒█████▓.░██▓.▒██▒░▒████▒...▒██████▒▒▒.▓███▀.░░██░░▒████▒▒██░...▓██░▒.▓███▀.░░▒████▒\e[0m"
-echo "\e[91m.▒▒...▓▒█░▒▓▒░.░..░░░.▒░.░░.▒▓.░▒▓░..▒.░░...░▒▓▒.▒.▒.░.▒▓.░▒▓░░░.▒░.░...▒.▒▓▒.▒.░░.░▒.▒..░░▓..░░.▒░.░░.▒░...▒.▒.░.░▒.▒..░░░.▒░.░\e[0m"
-echo "\e[91m..▒...▒▒.░░▒.░......░.░..░..░▒.░.▒░....░....░░▒░.░.░...░▒.░.▒░.░.░..░...░.░▒..░.░..░..▒....▒.░.░.░..░░.░░...░.▒░..░..▒....░.░..░\e[0m"
-echo "\e[91m..░...▒...░░..........░.....░░...░...░.......░░░.░.░...░░...░....░......░..░..░..░.........▒.░...░......░...░.░.░...........░...\e[0m"
-echo "\e[91m......░..░............░..░...░.................░........░........░..░.........░..░.░.......░.....░..░.........░.░.░.........░..░\e[0m"
-echo "\e[91m.................................................................................░..............................░...............\e[0m"
+echo -e "${Red}.▄▄▄.......██▓███..▓█████..██▀███..▄▄▄█████▓.█....██..██▀███..▓█████......██████..▄████▄...██▓▓█████..███▄....█..▄████▄..▓█████. ${NOCOLOR}"
+echo -e "${Red}▒████▄....▓██░..██▒▓█...▀.▓██.▒.██▒▓..██▒.▓▒.██..▓██▒▓██.▒.██▒▓█...▀....▒██....▒.▒██▀.▀█..▓██▒▓█...▀..██.▀█...█.▒██▀.▀█..▓█...▀. ${NOCOLOR}"
+echo -e "${Red}▒██..▀█▄..▓██░.██▓▒▒███...▓██.░▄█.▒▒.▓██░.▒░▓██..▒██░▓██.░▄█.▒▒███......░.▓██▄...▒▓█....▄.▒██▒▒███...▓██..▀█.██▒▒▓█....▄.▒███... ${NOCOLOR}"
+echo -e "${Red}░██▄▄▄▄██.▒██▄█▓▒.▒▒▓█..▄.▒██▀▀█▄..░.▓██▓.░.▓▓█..░██░▒██▀▀█▄..▒▓█..▄......▒...██▒▒▓▓▄.▄██▒░██░▒▓█..▄.▓██▒..▐▌██▒▒▓▓▄.▄██▒▒▓█..▄. ${NOCOLOR}"
+echo -e "${Red}.▓█...▓██▒▒██▒.░..░░▒████▒░██▓.▒██▒..▒██▒.░.▒▒█████▓.░██▓.▒██▒░▒████▒...▒██████▒▒▒.▓███▀.░░██░░▒████▒▒██░...▓██░▒.▓███▀.░░▒████▒ ${NOCOLOR}"
+echo -e "${Red}.▒▒...▓▒█░▒▓▒░.░..░░░.▒░.░░.▒▓.░▒▓░..▒.░░...░▒▓▒.▒.▒.░.▒▓.░▒▓░░░.▒░.░...▒.▒▓▒.▒.░░.░▒.▒..░░▓..░░.▒░.░░.▒░...▒.▒.░.░▒.▒..░░░.▒░.░ ${NOCOLOR}"
+echo -e "${Red}..▒...▒▒.░░▒.░......░.░..░..░▒.░.▒░....░....░░▒░.░.░...░▒.░.▒░.░.░..░...░.░▒..░.░..░..▒....▒.░.░.░..░░.░░...░.▒░..░..▒....░.░..░ ${NOCOLOR}"
+echo -e "${Red}..░...▒...░░..........░.....░░...░...░.......░░░.░.░...░░...░....░......░..░..░..░.........▒.░...░......░...░.░.░...........░... ${NOCOLOR}"
+echo -e "${Red}......░..░............░..░...░.................░........░........░..░.........░..░.░.......░.....░..░.........░.░.░.........░..░ ${NOCOLOR}"
+echo -e "${Red}.................................................................................░..............................░............... ${NOCOLOR}"
 echo ""
-echo "\e[91mAperture Science Server setup script\e[0m"
-echo "\e[91mVersion $version \e[0m"
-echo "\e[91mCopyright (C) 2022 Aperture Science\e[0m"
+echo -e "${Red}Aperture Science Server setup script ${NOCOLOR}"
+echo -e "${Red}Version $version  ${NOCOLOR}"
+echo -e "${Red}Copyright (C) 2022 Aperture Science ${NOCOLOR}"
 echo ""
-echo "\e[91mThis program is free software: you can redistribute it and/or modify\e[0m"
-echo "\e[91mit is under the terms of the GNU General Public License \e[0m"
+echo -e "${Red}This program is free software: you can redistribute it and/or modify ${NOCOLOR}"
+echo -e "${Red}it is under the terms of the GNU General Public License  ${NOCOLOR}"
 echo ""
 
 
@@ -76,7 +83,7 @@ apt-get install wget -y
 #!##########################################[NALA INSTALL]###################################################################
 
 #install nala
-echo  "\e[92mInstalling Nala\e[0m"
+echo  -e "${Green}Installing Nala ${NOCOLOR}"
 echo "deb [arch=amd64,arm64,armhf] http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
 wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > /dev/null
 apt update 
@@ -94,19 +101,19 @@ fi
 
 #check if nala is installed and print success message in green or error message in red
 if [ -f /usr/bin/nala ]; then
-   echo  "\e[92mNala installed successfully\e[0m"
+   echo  -e "${Green}Nala installed successfully ${NOCOLOR}"
 else
-   echo  "\e[91mNala failed to install\e[0m"
-   echo  "\e[91mPlease install nala manually\e[0m"
-   echo  "\e[91mNala is a core componet of this script and must be installed \e[0m"
-   echo  "\e[91mThe scritp will now stop bye bye <3 \e[0m"
+   echo  -e "${Red}Nala failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install nala manually ${NOCOLOR}"
+   echo  -e "${Red}Nala is a core componet of this script and must be installed  ${NOCOLOR}"
+   echo  -e "${Red}The scritp will now stop bye bye <3  ${NOCOLOR}"
    #remove the pid file
    rm /var/run/aperture.pid
    exit 1
 fi
 
 #update nala
-echo "\e[92mUpdating Nala\e[0m"
+echo -e "${Green}Updating Nala ${NOCOLOR}"
 nala update
 nala upgrade -y
 
@@ -114,64 +121,64 @@ nala upgrade -y
 
 
 #install neofetch over nala
-echo "\e[92mInstalling neofetch\e[0m"
+echo -e "${Green}Installing neofetch ${NOCOLOR}"
 nala install neofetch -y
 #check if neofetch is installed and print success message in green or error message in red
 if [ -f /usr/bin/neofetch ]; then
-   echo  "\e[92mNeofetch installed successfully\e[0m"
+   echo  -e "${Green}Neofetch installed successfully ${NOCOLOR}"
 else
-   echo  "\e[91mNeofetch failed to install\e[0m"
-   echo  "\e[91mPlease install neofetch manually\e[0m"
+   echo  -e "${Red}Neofetch failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install neofetch manually ${NOCOLOR}"
 fi
 
 
 #install net-tools over nala
-echo "\e[92mInstalling net-tools\e[0m"
+echo -e "${Green}Installing net-tools ${NOCOLOR}"
 nala install net-tools -y
 #check if net-tools is installed and print success message in green or error message in red
 #if [ -f /usr/bin/ifconfig ]; then
-#  echo  "\e[92mNet-tools installed successfully\e[0m"
+#  echo  -e "${Green}Net-tools installed successfully ${NOCOLOR}"
 #else
-#   echo  "\e[91mNet-tools failed to install\e[0m"
-#   echo  "\e[91mPlease install net-tools manually\e[0m"
+#   echo  -e "${Red}Net-tools failed to install ${NOCOLOR}"
+#   echo  -e "${Red}Please install net-tools manually ${NOCOLOR}"
 #fi
 
 
 #install nano over nala
-echo "\e[92mInstalling nano\e[0m"
+echo -e "${Green}Installing nano ${NOCOLOR}"
 nala install nano -y
 #check if nano is installed and print success message in green or error message in red
 if [ -f /usr/bin/nano ]; then
-   echo  "\e[92mnano installed successfully\e[0m"
+   echo  -e "${Green}nano installed successfully ${NOCOLOR}"
 else
-   echo  "\e[91mnano failed to install\e[0m"
-   echo  "\e[91mPlease install nano manually\e[0m"
+   echo  -e "${Red}nano failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install nano manually ${NOCOLOR}"
    
 fi
 
 
 #install curl over nala
-echo "\e[92mInstalling curl\e[0m"
+echo -e "${Green}Installing curl ${NOCOLOR}"
 nala install curl -y
 #check if curl is installed and print success message in green or error message in red
 if [ -f /usr/bin/curl ]; then
-   echo  "\e[92mcurl installed successfully\e[0m"
+   echo  -e "${Green}curl installed successfully ${NOCOLOR}"
 else
-   echo  "\e[91mcurl failed to install\e[0m"
-   echo  "\e[91mPlease install curl manually\e[0m"
+   echo  -e "${Red}curl failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install curl manually ${NOCOLOR}"
    
 fi
 
 
 #install git over nala
-echo "\e[92mInstalling git\e[0m"
+echo -e "${Green}Installing git ${NOCOLOR}"
 nala install git -y
 #check if git is installed and print success message in green or error message in red
 if [ -f /usr/bin/git ]; then
-   echo  "\e[92mGit installed successfully\e[0m"
+   echo  -e "${Green}Git installed successfully ${NOCOLOR}"
 else
-   echo  "\e[91mGit failed to install\e[0m"
-   echo  "\e[91mPlease install git manually\e[0m"
+   echo  -e "${Red}Git failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install git manually ${NOCOLOR}"
    
 fi
 
@@ -184,7 +191,7 @@ fi
 #apt-get install build-essential
 
 #install htop over nala
-echo "\e[92mInstalling htop\e[0m"
+echo -e "${Green}Installing htop ${NOCOLOR}"
 nala install htop -y
 #check if htop is installed and print success message or error message
 
@@ -192,7 +199,7 @@ nala install htop -y
 #!##########################################[BANNER and BASH SETUP]###################################################################
 
 #copy the 99-banner file to /etc/update-motd.d/99-banner
-echo "\e[92mInstalling banner\e[0m"
+echo -e "${Green}Installing banner ${NOCOLOR}"
 cp 99-banner /etc/update-motd.d/99-banner
 #make the file executable
 chmod +x /etc/update-motd.d/99-banner
@@ -203,60 +210,60 @@ USERNAME=$(cat /etc/passwd | grep 1000 | cut -d: -f1)
 #change to the home directory of the user
 cd /home/$USERNAME
 echo $USERNAME
-echo   "\e[92mChanging to home directory of user\e[0m"
+echo   -e "${Green}Changing to home directory of user ${NOCOLOR}"
 #add the following to the .bashrc file
-sudo -u $USERNAME echo "PS1='\[\e[0;91m\]Aperture Science Server Shell \n\[\e[0;91m\]├\[\e[0;91m\]SYSTEM:\[\e[0;38;5;202m\]\h \[\e[0;91m\]IP:\[\e[0;38;5;202m\]$(hostname -I) \[\e[0;91m\]USER:\[\e[0;38;5;202m\]\u\n\[\e[0;91m\]├\[\e[0;91m\]DIR:\[\e[0;38;5;199m\]\w\n\[\e[0;91m\]└\[\e[0;97m\]> \[\e[0m\]'" >> .bashrc
+sudo -u $USERNAME echo "PS1='\[\e[0;91m\]Aperture Science Server Shell \n\[\e[0;91m\]├\[\e[0;91m\]SYSTEM:\[\e[0;38;5;202m\]\h \[\e[0;91m\]IP:\[\e[0;38;5;202m\]$(hostname -I) \[\e[0;91m\]USER:\[\e[0;38;5;202m\]\u\n\[\e[0;91m\]├\[\e[0;91m\]DIR:\[\e[0;38;5;199m\]\w\n\[\e[0;91m\]└\[\e[0;97m\]> \[ ${NOCOLOR}\]'" >> .bashrc
 
 #!##########################################################[SOME SOFTWARE]###################################################################
 
 #ask the user if they want to install docker and docker-compose over nala
-echo "\e[92mDo you want to install docker and docker-compose?\e[0m"
+echo -e "${Green}Do you want to install docker and docker-compose? ${NOCOLOR}"
 read -p "y/n: "  
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #install docker 
-    echo "\e[92mInstalling docker\e[0m"
-    echo "\e[92mInstalling docker-compose\e[0m"
+    echo -e "${Green}Installing docker ${NOCOLOR}"
+    echo -e "${Green}Installing docker-compose ${NOCOLOR}"
     curl https://get.docker.com | bash
     #check if docker is installed and print success message in green or error message in red
     if [ -f /usr/bin/docker ]; then
-       echo  "\e[92mdocker installed successfully\e[0m"
+       echo  -e "${Green}docker installed successfully ${NOCOLOR}"
     else
-       echo  "\e[91mdocker failed to install\e[0m"
-       echo  "\e[91mPlease install docker manually\e[0m"
+       echo  -e "${Red}docker failed to install ${NOCOLOR}"
+       echo  -e "${Red}Please install docker manually ${NOCOLOR}"
     fi
     #check if docker-compose is installed and print success message in green or error message in red
     if [ -f /usr/bin/docker-compose ]; then
-       echo  "\e[92mdocker-compose installed successfully\e[0m"
+       echo  -e "${Green}docker-compose installed successfully ${NOCOLOR}"
     else
-       echo  "\e[91mdocker-compose failed to install\e[0m"
-       echo  "\e[91mPlease install docker-compose manually\e[0m"
+       echo  -e "${Red}docker-compose failed to install ${NOCOLOR}"
+       echo  -e "${Red}Please install docker-compose manually ${NOCOLOR}"
     fi
 fi
 
 #ask the user if they want to install portainer 
-echo "\e[92mDo you want to install portainer?\e[0m"
+echo -e "${Green}Do you want to install portainer? ${NOCOLOR}"
 read -p "y/n: "  
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #install portainer
-    echo "\e[92mInstalling portainer\e[0m"
+    echo -e "${Green}Installing portainer ${NOCOLOR}"
     docker run -d -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /media/portainer:/data portainer/portainer-ce:latest
 fi
 
 #ask the user if they want to install netdata in a docker container
-echo "\e[92mDo you want to install netdata in a docker container? (docker needet)\e[0m"
+echo -e "${Green}Do you want to install netdata in a docker container? (docker needet) ${NOCOLOR}"
 read -p "y/n: "  
 echo    # (optional) move to a new line
 #check if docker is installed 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
    if [ -f /usr/bin/docker ]; then
-       echo  "\e[92mdocker is installed \e[0m"
+       echo  -e "${Green}docker is installed  ${NOCOLOR}"
        #install netdata
-         echo "\e[92mInstalling netdata\e[0m"
+         echo -e "${Green}Installing netdata ${NOCOLOR}"
          docker run -d --name=netdata \
                -p 19999:19999 \
                -v netdataconfig:/etc/netdata \
@@ -272,46 +279,46 @@ then
                --security-opt apparmor=unconfined \
                netdata/netdata:latest
     else
-       echo  "\e[91mdocker is not installed\e[0m"
-       echo  "\e[91mcan not run netdata as container\e[0m"
+       echo  -e "${Red}docker is not installed ${NOCOLOR}"
+       echo  -e "${Red}can not run netdata as container ${NOCOLOR}"
     fi   
 fi
 
 #get the local ip address of the server and save it in a variable
-IP=hostname -I | awk '{print $1}'
+IP=$(hostname -I)
 
 #ask the user if they want to install webmin
-echo "\e[92mDo you want to install webmin?\e[0m"
-read -p "y/n: "  
+echo -e "${Green}Do you want to install webmin? ${NOCOLOR}"
+read -p "y/n: "
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #install webmin
-    echo "\e[92mInstalling webmin\e[0m"
+    echo -e "${Green}Installing webmin ${NOCOLOR}"
     apt-get install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python unzip -y
     wget http://prdownloads.sourceforge.net/webadmin/webmin_2.000_all.deb
     dpkg --install webmin_2.000_all.deb
     rm webmin_2.000_all.deb
     #test if you get a anser for  a webserver on port 10000
-      echo "\e[92mTesting if webmin is installed\e[0m"
+      echo -e "${Green}Testing if webmin is installed ${NOCOLOR}"
       if nc -z -w1 localhost 10000; then
-         echo  "\e[92mWebmin installed successfully\e[0m"
-         echo  "\e[92mWebmin is running on http:// $IP :10000 \e[0m"
+         echo  -e "${Green}Webmin installed successfully ${NOCOLOR}"
+         echo  -e "${Green}Webmin is running on http:// $IP :10000  ${NOCOLOR}"
                else
-         echo  "\e[91mWebmin failed to install\e[0m"
-         echo  "\e[91mPlease install webmin manually\e[0m"
+         echo  -e "${Red}Webmin failed to install ${NOCOLOR}"
+         echo  -e "${Red}Please install webmin manually ${NOCOLOR}"
       fi
    
 fi
 
 #ask the user if they want to install ROS
-echo "\e[92mDo you want to install ROS? (ROS-noetic/ ubuntu 22)\e[0m"
+echo -e "${Green}Do you want to install ROS? (ROS-noetic/ ubuntu 22) ${NOCOLOR}"
 read -p "y/n: "  
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #install ROS
-      echo "\e[92mInstalling ROS\e[0m"
+      echo -e "${Green}Installing ROS ${NOCOLOR}"
       sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
       curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
       apt-get update
@@ -327,11 +334,11 @@ fi
 
 
 #print in green taht the script is done
-echo  "\e[32mDone\e[0m"
+echo  "\e[32mDone ${NOCOLOR}"
 
 #remove the pid file
 rm /var/run/aperture.pid
 
 #restart the ssh service
-echo "\e[92mRestarting ssh service\e[0m"
+echo -e "${Green}Restarting ssh service ${NOCOLOR}"
 systemctl restart sshd
