@@ -34,6 +34,15 @@ Do you want to install (Software Name)? (y/n)
 
 ## Features
 
+- update and upgrade your system
+- install nala as package manager
+- installing Nano (Text Editor), Neofetch, Net-Tools, Curl, Git, Htop and all ther dependencies
+- seting a banner for ssh and PS1 for the user
+- install Portainer (if you want)
+- install Webmin (if you want)
+- install Netdata as a Container (if you want)
+- install Docker and Docker-Compose (if you want)
+- install ROS-noetic (if you want)
 
 
 
@@ -55,6 +64,5 @@ If you would like to contribute to the script's development or suggest improveme
 
 ## License
 
-This program is free software: you can redistribute and/or modify it.
-it is under the terms of the GNU General Public License. 
-Please give credit to the original author (Me) when you use it elsewhere.
+This program is free software: you can redistribute and/or modify it under the terms of the GNU General Public License. 
+Please give credit to the original author (Me) when you use it elsewhere. Thank you! :)
