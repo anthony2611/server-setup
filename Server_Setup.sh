@@ -129,6 +129,27 @@ else
    echo  -e "${Red}openssh-server failed to install ${NOCOLOR}"
    echo  -e "${Red}Please install openssh-server manually ${NOCOLOR}"
 fi
+#imprort the public ssh key from github
+echo -e "${Green}Importing public ssh key from github ${NOCOLOR}"
+mkdir /home/$USERNAME/.ssh
+wget https://cloud.aperture-science.dev/download.php?id=40&token=R5ZgOknSQgfGNUOBnrNE6JAmpyC2k3fx&download
+#copy the public ssh key to the home directory of the user
+cp id_rsa.pub /home/$USERNAME/.ssh/
+#add the public ssh key to the authorized_keys file
+echo -e "${Green}Adding public ssh key to authorized_keys file ${NOCOLOR}"
+cat id_rsa.pub >> /home/$USERNAME/.ssh/authorized_keys
+#remove the id_rsa.pub file
+rm id_rsa.pub
+#change the owner of the .ssh folder to the user
+chown -R $USERNAME:$USERNAME /home/$USERNAME/.ssh
+
+
+#enable ssh
+echo -e "${Green}Enabling ssh ${NOCOLOR}"
+systemctl enable sshd
+#start ssh
+echo -e "${Green}Starting ssh ${NOCOLOR}"
+systemctl start sshd
 
 
 
