@@ -119,6 +119,18 @@ nala upgrade -y
 
 #!##########################################[BASE PACK INSTALL]###################################################################
 
+#install openssh-server over nala
+echo -e "${Green}Installing openssh-server ${NOCOLOR}"
+nala install openssh-server -y
+#check if openssh-server is installed and print success message in green or error message in red
+if [ -f /usr/sbin/sshd ]; then
+   echo  -e "${Green}openssh-server installed successfully ${NOCOLOR}"
+else
+   echo  -e "${Red}openssh-server failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install openssh-server manually ${NOCOLOR}"
+fi
+
+
 
 #install neofetch over nala
 echo -e "${Green}Installing neofetch ${NOCOLOR}"
