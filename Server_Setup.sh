@@ -162,7 +162,7 @@ echo -e "${Green}Enabling ssh ${NOCOLOR}"
 systemctl enable sshd
 #start ssh
 echo -e "${Green}Starting ssh ${NOCOLOR}"
-systemctl start sshd
+systemctl restart sshd
 
 
 
