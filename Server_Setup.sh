@@ -129,10 +129,20 @@ else
    echo  -e "${Red}openssh-server failed to install ${NOCOLOR}"
    echo  -e "${Red}Please install openssh-server manually ${NOCOLOR}"
 fi
+#install wget over nala
+echo -e "${Green}Installing wget ${NOCOLOR}"
+nala install wget -y
+#check if wget is installed and print success message in green or error message in red
+if [ -f /usr/bin/wget ]; then
+   echo  -e "${Green}wget installed successfully ${NOCOLOR}"
+else
+   echo  -e "${Red}wget failed to install ${NOCOLOR}"
+   echo  -e "${Red}Please install wget manually ${NOCOLOR}"
+fi
+
 #imprort the public ssh key from github
 echo -e "${Green}Importing public ssh key from github ${NOCOLOR}"
 mkdir /home/$USERNAME/.ssh
-wget https://cloud.aperture-science.dev/download.php?id=40&token=R5ZgOknSQgfGNUOBnrNE6JAmpyC2k3fx&download
 #copy the public ssh key to the home directory of the user
 cp id_rsa.pub /home/$USERNAME/.ssh/
 #add the public ssh key to the authorized_keys file
