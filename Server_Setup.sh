@@ -140,6 +140,9 @@ else
    echo  -e "${Red}Please install wget manually ${NOCOLOR}"
 fi
 
+#get the username of the user with the id of 1000
+USERNAME=$(cat /etc/passwd | grep 1000 | cut -d: -f1)
+
 #imprort the public ssh key from github
 echo -e "${Green}Importing public ssh key from github ${NOCOLOR}"
 mkdir /home/$USERNAME/.ssh
