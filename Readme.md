@@ -9,7 +9,7 @@ This repository contains a script for setting up servers with specific configura
 
 ### Usage
 
-2. First, clone the repository to your server:
+**1. First, clone the repository to your server:**
 
 ```bash
 git clone https://github.com/anthony2611/server-setup.git  
@@ -20,26 +20,26 @@ git clone https://setup.aperture-science.dev
 ```
     
 
-2. Ensure the script is executable by running:
+**2. Ensure the script is executable by running:**
 
 ```bash
 chmod +x Server_Setup.sh
 ```
 
-3. Run the script:
+**3. Run the script:**
 
 ```bash
 ./Server_Setup.sh
 ```
 
 
-4. The script will interactively ask if you want to install f.Ex. Portainer or Webmin. If you wish to install it, respond with 'y' or 'Y' and press Enter. If you do not want to install, you can respond with 'n' or 'N'.
+**4. The script will interactively ask if you want to install f.Ex. Portainer or Webmin. If you wish to install it, respond with 'y' or 'Y' and press Enter. If you do not want to install, you can respond with 'n' or 'N'.**
 
 ```bash
 Do you want to install (Software Name)? (y/n)
 ```
 
-5. If you agree to install , the script will proceed with the installation and provide feedback in the terminal.
+**5. If you agree to install , the script will proceed with the installation and provide feedback in the terminal.**
 
 **Note:** If the script is interrupted or if it encounters an error, you may need to address the issue before rerunning the script.
 
